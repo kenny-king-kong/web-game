@@ -11,6 +11,20 @@
 <div id="wrap">
   <div id="title">A S C I I &nbsp; C I T Y &nbsp; &mdash; &nbsp; walk the streets</div>
   <canvas id="screen"></canvas>
+
+  <div class="touch-controls" aria-label="on-screen movement controls">
+    <div class="pad move-pad">
+      <button type="button" class="pad-btn up" data-key="KeyW" aria-label="Move forward">&#9650;</button>
+      <button type="button" class="pad-btn left" data-key="KeyA" aria-label="Strafe left">&#9664;</button>
+      <button type="button" class="pad-btn right" data-key="KeyD" aria-label="Strafe right">&#9654;</button>
+      <button type="button" class="pad-btn down" data-key="KeyS" aria-label="Move backward">&#9660;</button>
+    </div>
+    <div class="pad turn-pad">
+      <button type="button" class="pad-btn turn-left" data-key="ArrowLeft" aria-label="Turn left">&#8634;</button>
+      <span class="pad-label">turn</span>
+      <button type="button" class="pad-btn turn-right" data-key="ArrowRight" aria-label="Turn right">&#8635;</button>
+    </div>
+  </div>
 </div>
 
 <script src="js/config.js"></script>

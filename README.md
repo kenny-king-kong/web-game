@@ -30,6 +30,8 @@ directly from disk also works, but pointer-lock mouse-look requires
 - Click the canvas, then move the mouse — look around (pointer lock)
 - `Esc` — release the mouse
 - `H` — toggle the help overlay
+- On-screen D-pad + turn buttons below the canvas — full mouse/touch control,
+  no keyboard required (works on phones/tablets too)
 
 A minimap in the top-right corner shows nearby buildings, trees, and cars,
 and your position/heading.
@@ -47,7 +49,9 @@ and your position/heading.
   `<canvas>`, batching consecutive same-color runs into single draw calls
   for performance, and draws the HUD/minimap.
 - `js/player.js` — movement and circle-vs-grid / circle-vs-sprite collision.
-- `js/input.js` — keyboard state + pointer-lock mouse look.
+- `js/input.js` — keyboard state, pointer-lock mouse look, and generic
+  `[data-key]` binding so the on-screen D-pad/turn buttons feed the same key
+  codes as a real keyboard.
 
 All tunable constants (viewport resolution, field of view, speeds, city
 size/seed, render distance, etc.) live in `js/config.js`.

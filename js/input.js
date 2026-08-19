@@ -32,4 +32,28 @@ class Input {
     this._mouseDx = 0;
     return dx;
   }
+
+  // Wires up any [data-key] element (on-screen D-pad / turn buttons) so
+  // holding it down adds that key code, same as a real keydown - the
+  // movement code in player.js never has to know the difference.
+  bindTouchControls(root) {
+    root.querySelectorAll('[data-key]').forEach((el) => {
+      const code = el.dataset.key;
+      const press = (e) => {
+        e.preventDefault();
+        this.keys.add(code);
+        el.classList.add('active');
+      };
+      const release = (e) => {
+        e.preventDefault();
+        this.keys.delete(code);
+        el.classList.remove('active');
+      };
+      el.addEventListener('pointerdown', press);
+      el.addEventListener('pointerup', release);
+      el.addEventListener('pointercancel', release);
+      el.addEventListener('pointerleave', release);
+      el.addEventListener('contextmenu', (e) => e.preventDefault());
+    });
+  }
 }

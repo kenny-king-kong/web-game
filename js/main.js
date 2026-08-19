@@ -4,6 +4,7 @@
   const canvas = document.getElementById('screen');
   const renderer = new Renderer(canvas);
   const input = new Input(canvas);
+  input.bindTouchControls(document);
 
   const city = generateCity(CONFIG.MAP_SIZE, CONFIG.CITY_SEED);
   const spawn = findSpawn(city);

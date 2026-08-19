@@ -60,6 +60,7 @@ class Renderer {
         'WASD / Arrows: move    Mouse (after click): look',
         'A/D: strafe   Left/Right arrows: turn',
         'Esc: release mouse     H: toggle this help',
+        'Or use the on-screen buttons below the screen',
       ];
       const w = 460, h = 20 + lines.length * 18;
       const x = this.canvas.width / 2 - w / 2;
