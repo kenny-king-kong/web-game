@@ -4,18 +4,24 @@ html, body {
   background: #05060a;
   color: #ddd;
   font-family: "Courier New", monospace;
-  height: 100%;
+  min-height: 100%;
+}
+
+body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  padding: 16px 10px;
+  box-sizing: border-box;
 }
 
 #wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  width: 100%;
+  max-width: 1008px;
 }
 
 #screen {
@@ -24,6 +30,11 @@ html, body {
   image-rendering: pixelated;
   border: 1px solid #333;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 1008px;
+  height: auto;
+  display: block;
+  touch-action: none;
 }
 
 #title {
@@ -31,4 +42,79 @@ html, body {
   font-size: 13px;
   color: #7fd6ff;
   opacity: 0.85;
+}
+
+.touch-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 24px;
+  flex-wrap: wrap;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.pad {
+  display: grid;
+  gap: 6px;
+}
+
+.move-pad {
+  grid-template-columns: repeat(3, 46px);
+  grid-template-rows: repeat(3, 46px);
+}
+.move-pad .up    { grid-column: 2; grid-row: 1; }
+.move-pad .left  { grid-column: 1; grid-row: 2; }
+.move-pad .right { grid-column: 3; grid-row: 2; }
+.move-pad .down  { grid-column: 2; grid-row: 3; }
+
+.turn-pad {
+  grid-template-columns: 52px 40px 52px;
+  align-items: center;
+  margin-left: auto;
+}
+.turn-pad .pad-label {
+  color: #6c7680;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.turn-pad .turn-left  { border-radius: 50%; }
+.turn-pad .turn-right { border-radius: 50%; }
+
+.pad-btn {
+  width: 100%;
+  height: 100%;
+  min-height: 46px;
+  border-radius: 8px;
+  border: 1px solid #33465a;
+  background: rgba(20, 26, 36, 0.85);
+  color: #7fd6ff;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pad-btn:active,
+.pad-btn.active {
+  background: rgba(127, 214, 255, 0.18);
+  border-color: #7fd6ff;
+  color: #ffe28a;
+}
+
+@media (max-width: 520px) {
+  .touch-controls {
+    justify-content: center;
+    gap: 28px;
+  }
+  .turn-pad {
+    margin-left: 0;
+  }
 }
