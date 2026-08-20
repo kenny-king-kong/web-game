@@ -24,6 +24,7 @@
     lastTime = now;
 
     updatePlayer(player, input, city, city.sprites, dt);
+    updateTraffic(city, dt);
 
     const frame = renderFrame(player, city, now / 1000);
     renderer.drawFrame(frame);

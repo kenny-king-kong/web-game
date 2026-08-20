@@ -6,9 +6,9 @@ where walls, floor, sky, and objects are all drawn as colored text glyphs on
 a `<canvas>` instead of textures.
 
 The world is a small procedurally generated city: buildings of varying
-height (with lit/dark windows), trees, parked cars, roads with lane
-markings, sidewalks, and parks. You walk around it freely and collide with
-buildings, trees, and cars like solid objects.
+height (with lit/dark windows), trees, cars driving up and down the roads,
+lane markings, sidewalks, and parks. You walk around it freely and collide
+with buildings, trees, and cars like solid objects.
 
 ## Running it
 
@@ -40,7 +40,11 @@ and your position/heading.
 
 - `js/citygen.js` — procedurally lays out a grid of city blocks (roads,
   building footprints with random height/color, parks, sidewalks) and
-  scatters tree/car sprites, all from a seeded RNG for reproducibility.
+  scatters tree/car sprites, all from a seeded RNG for reproducibility. Each
+  car is assigned a lane (its spawn row/column, which is guaranteed to be
+  road for its entire length) and drives back and forth along it every
+  frame via `updateTraffic()`, bouncing at the map edges - no pathfinding
+  needed.
 - `js/raycaster.js` — for every character-column on screen, casts a ray
   using DDA to find the nearest building wall, then separately casts the
   floor (road/sidewalk/grass) and sky per row, and finally draws trees/cars

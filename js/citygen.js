@@ -98,24 +98,52 @@ function generateCity(size, seed) {
     }
   }
 
-  // Scatter parked cars along road cells.
+  // Scatter cars along road cells, each assigned to drive up and down its
+  // own lane. A road cell's row or column is road for its *entire* span
+  // (see onRoadX/onRoadY above, which don't depend on the other axis), so
+  // a car that just drives straight along its spawn row/column can never
+  // steer into a building - no pathfinding needed.
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       if (grid[y][x].type !== CELL.ROAD) continue;
       if (rng() < 0.045) {
+        const isRoadRow = (y % PERIOD) < ROAD_WIDTH;
+        const isRoadCol = (x % PERIOD) < ROAD_WIDTH;
+        const axis = isRoadRow && isRoadCol ? (rng() < 0.5 ? 'x' : 'y') : (isRoadRow ? 'x' : 'y');
         sprites.push({
           type: 'car',
-          x: x + 0.5 + (rng() - 0.5) * 0.5,
-          y: y + 0.5 + (rng() - 0.5) * 0.5,
+          x: x + 0.5 + (axis === 'y' ? (rng() - 0.5) * 0.6 : 0),
+          y: y + 0.5 + (axis === 'x' ? (rng() - 0.5) * 0.6 : 0),
           radius: 0.42,
           color: CAR_COLORS[Math.floor(rng() * CAR_COLORS.length)],
-          facing: rng() < 0.5 ? 'h' : 'v',
+          axis,
+          dir: rng() < 0.5 ? 1 : -1,
+          speed: 1.6 + rng() * 1.6,
         });
       }
     }
   }
 
   return { size, grid, buildings, sprites };
+}
+
+// Advances every car sprite along its lane, bouncing off the map edges
+// so traffic keeps flowing indefinitely without ever leaving the road.
+function updateTraffic(city, dt) {
+  const size = city.size;
+  const margin = 0.6;
+  for (const s of city.sprites) {
+    if (s.type !== 'car') continue;
+    if (s.axis === 'x') {
+      s.x += s.dir * s.speed * dt;
+      if (s.x < margin) { s.x = margin; s.dir = 1; }
+      else if (s.x > size - margin) { s.x = size - margin; s.dir = -1; }
+    } else {
+      s.y += s.dir * s.speed * dt;
+      if (s.y < margin) { s.y = margin; s.dir = 1; }
+      else if (s.y > size - margin) { s.y = size - margin; s.dir = -1; }
+    }
+  }
 }
 
 function cellAt(city, x, y) {
